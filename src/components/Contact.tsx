@@ -1,6 +1,10 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 export default function Contact(): ReactElement {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+
   return (
     <section id="contact" className="text-gray-600 body-font relative">
       <div className="container px-5 py-24 mx-auto">
@@ -14,7 +18,23 @@ export default function Contact(): ReactElement {
             Write to us below.
           </p>
         </div>
-        <div className="lg:w-1/2 md:w-2/3 mx-auto">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const messageToSend =
+              "I, " +
+              name +
+              " (email: " +
+              email +
+              "), have the following query regarding web and mobile services:%0D%0A" +
+              message;
+            window.open(
+              "mailto:hi@mpsinfotech.in?subject=Query from website&body=" +
+                messageToSend
+            );
+          }}
+          className="lg:w-1/2 md:w-2/3 mx-auto"
+        >
           <div className="flex flex-wrap -m-2">
             <div className="p-2 w-1/2">
               <div className="relative">
@@ -27,6 +47,8 @@ export default function Contact(): ReactElement {
                 <input
                   type="text"
                   id="name"
+                  required
+                  onChange={(e) => setName(e.target.value)}
                   name="name"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
@@ -43,6 +65,8 @@ export default function Contact(): ReactElement {
                 <input
                   type="email"
                   id="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
                   name="email"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
@@ -59,6 +83,8 @@ export default function Contact(): ReactElement {
                 <textarea
                   id="message"
                   name="message"
+                  required
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                 ></textarea>
               </div>
@@ -81,7 +107,7 @@ export default function Contact(): ReactElement {
               </address>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   );
